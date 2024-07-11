@@ -42,6 +42,8 @@ export default {
     // 在home的mounted中请求floor的数据，然后通过props将数据传递给floor组件
     // 分发一个action
     this.$store.dispatch('getFloorList')
+    // 在Home加载完毕之后，派发action，获取用户详细信息
+    // this.$store.dispatch('getUserInfo')
   },
   //计算属性
   computed:{

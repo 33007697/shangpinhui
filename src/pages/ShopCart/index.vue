@@ -88,7 +88,8 @@
           <i class="summoney">{{ getSum }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          
+          <router-link to="/trade" class="sum-btn">结算</router-link>
         </div>
       </div>
     </div>
@@ -162,7 +163,7 @@ export default {
       // 然后结合async和await，保证获取到promise返回的信息
       try {
         // 使用await保证获取到promsie的成功信息，然后再发送请求，获取最新的购物车列表数据
-        await this.$store.dispatch("deleteCart", cart.skuId2);
+        await this.$store.dispatch("deleteCart", cart.skuId);
         //  发送请求获取购物车列表数据
         this.getData();
       } catch (error) {

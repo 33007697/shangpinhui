@@ -20,6 +20,9 @@ export default {
   mounted() {
     // 向vuex中发放一个action
     this.$store.dispatch("categoryList");
+    // 在App加载完毕之后，派发action，获取用户详细信息
+    // 是为了让所有的页面都可以使用到userInfo，用户信息，获取一次，全局使用
+    // this.$store.dispatch('getUserInfo')
   },
 };
 </script>

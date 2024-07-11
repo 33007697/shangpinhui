@@ -23,7 +23,15 @@ const requests = axios.create({
 requests.interceptors.request.use((config)=>{
     // 在请求拦截中添加请求头信息，信息为UUID用户唯一标识，用于鉴定识别用户
     // 因为uuid放在了vuex仓库中,需要引入store仓库，再从仓库中获取uuid
-    config.headers.userTempId = store.state.detail.uuid_token
+    if(store.state.detail.uuid_token){
+        config.headers.userTempId = store.state.detail.uuid_token
+    }
+    // 在请求拦截器中添加请求头信息，为用户唯一身份标识token令牌，用户识别用户身份
+    // 用户唯一身份标识在vuex中的user中
+    if(store.state.user.token){
+        // 有则添加
+        config.headers.token = store.state.user.token
+    }
     // 请求拦截时开启进度条
     nProgress.start()
     // 期中最后必须返回该回调函数的参数,这个参数是配置对象，其中有一个参数很重要就是header请求头信息

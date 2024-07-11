@@ -5,14 +5,20 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <!-- 判断是否有userName ,没有显示登录-->
+          <p v-if="!getUserName">
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link class="register" to="/register">免费注册</router-link>
           </p>
+          <!-- 有则显示用户名 -->
+          <p v-else>
+            <a >{{ getUserName }}</a>
+            <a class="register" @click="getLogout">退出登录</a>
+          </p>
         </div>
         <div class="typeList">
-          <a href="###">我的订单</a>
+          <router-link to="/center">我的订单</router-link>
           <router-link to="/shopcart">我的购物车</router-link>
           <a href="###">我的尚品汇</a>
           <a href="###">尚品汇会员</a>
@@ -63,6 +69,19 @@ export default {
       if(this.$route.query){
         this.$router.push({name:'search',params:{keyword:this.keyword || undefined},query:this.$route.query})
       }
+    },
+    // 退出登录
+   async getLogout(){
+      //需要捕获到退出登录的状态是否成功，需要使用try...catch配合async和await，保证获取到成功或失败
+      try {
+        // 派发action，退出登录
+        await this.$store.dispatch('getLogout')
+        // 退出成功之后，跳转到home页面
+        this.$router.push('/home')
+      } catch (error) {
+        // 请求失败时，提示错误信息
+        alert(error.message)
+      }
     }
   },
   mounted(){
@@ -71,6 +90,12 @@ export default {
       // 清空keyword的值
       this.keyword = ''
     })
+  },
+  computed:{
+    // 计算出vuex中用户信息userInfo中的name
+    getUserName(){
+      return this.$store.state.user.userInfo.name
+    }
   }
 };
 </script>
